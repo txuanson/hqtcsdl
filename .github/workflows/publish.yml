@@ -21,10 +21,10 @@ jobs:
       - name: Checkout git repo
         uses: actions/checkout@v1
 
-      - name: Install Node and NPM
+      - name: Install Node, NPM and Yarn
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 15
 
       - name: Install dependencies
         run: |

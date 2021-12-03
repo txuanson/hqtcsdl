@@ -1,5 +1,6 @@
 {
   "name": "electron-react-boilerplate",
+  "productName": "ElectronReact",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Fast Refresh for rapid application development",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
@@ -12,8 +13,7 @@
     "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
     "start:main": "cross-env NODE_ENV=development electron -r ts-node/register/transpile-only ./src/main/main.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest",
-    "prepare": "husky install"
+    "test": "jest"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -176,6 +176,7 @@
     "@types/terser-webpack-plugin": "^5.0.4",
     "@types/webpack-env": "^1.16.3",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "autoprefixer": "^10.4.0",
     "browserslist-config-erb": "^0.0.3",
     "chalk": "^4.1.2",
     "concurrently": "^6.3.0",
@@ -204,12 +205,14 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
-    "husky": "^7.0.0",
+    "husky": "7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.3.1",
     "lint-staged": "^11.2.6",
     "mini-css-extract-plugin": "^2.4.3",
     "opencollective-postinstall": "^2.0.3",
+    "postcss": "^8.3.11",
+    "postcss-loader": "^6.2.0",
     "prettier": "^2.4.1",
     "react-refresh": "^0.10.0",
     "react-refresh-typescript": "^2.0.2",
@@ -218,6 +221,7 @@
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
+    "tailwindcss": "^2.2.19",
     "terser-webpack-plugin": "^5.2.4",
     "ts-jest": "^27.0.7",
     "ts-loader": "^9.2.6",
@@ -231,6 +235,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "antd": "^4.17.2",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.1",
     "electron-updater": "^4.3.9",
@@ -261,5 +266,10 @@
       }
     ],
     "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
