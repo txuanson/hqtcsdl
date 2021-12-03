@@ -1,11 +1,20 @@
-# erb-tailwind-example
+[![HCMUS](https://raw.githubusercontent.com/txuanson/linux_rand_module/main/logo.png)](https://www.hcmus.edu.vn/)
+# Đồ án Hệ quản trị CSDL
 
-**See the last commit for the required changes for tailwind integration**
+## Danh sách thành viên
+- Lê Hoàng Thiên Ân
+- Đào Duy An
+- Trần Xuân Sơn
 
-## Install
-
+## Cài đặt
+Cần sử dụng `yarn`
 ```bash
-git clone --depth 1 --branch main https://github.com/amilajack/erb-tailwind-example.git your-project-name
-cd your-project-name
-npm install
+git clone --depth 1 --branch main https://github.com/txuanson/hqtcsdl.git
+cd hqtcsdl
+yarn
+```
+
+## Khởi chạy (dev)
+```bash
+yarn start
 ```
