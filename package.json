@@ -167,6 +167,7 @@
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/history": "4.7.9",
     "@types/jest": "^27.0.2",
+    "@types/mssql": "^7.1.4",
     "@types/node": "16.11.6",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
@@ -210,6 +211,7 @@
     "jest": "^27.3.1",
     "lint-staged": "^11.2.6",
     "mini-css-extract-plugin": "^2.4.3",
+    "mssql": "^7.3.0",
     "opencollective-postinstall": "^2.0.3",
     "postcss": "^8.3.11",
     "postcss-loader": "^6.2.0",
@@ -235,6 +237,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "antd": "^4.17.2",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.1",

@@ -16,6 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { authenticate, closePool, getConnection } from './db';
 
 export default class AppUpdater {
   constructor() {
@@ -32,6 +33,14 @@ ipcMain.on('ipc-example', async (event, arg) => {
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
 });
+
+ipcMain.handle('login', async(_event, ...args) => {
+  await authenticate(args[0], args[1]);
+})
+
+ipcMain.handle('logout', closePool);
+
+ipcMain.handle('getConnection', getConnection);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -77,9 +86,9 @@ const createWindow = async () => {
     height: 720,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      // preload: path.join(__dirname, 'preload.js'),
       contextIsolation: false,
-      nodeIntegration: true
+      nodeIntegration: true,
     },
   });
 
@@ -130,6 +139,8 @@ app
   .whenReady()
   .then(() => {
     createWindow();
+    // require('./db');
+
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

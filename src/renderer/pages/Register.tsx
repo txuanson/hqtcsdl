@@ -6,7 +6,7 @@ import bgImg from '../../../assets/img/register.png';
 export default function Register(){
   return (
     <Row className="h-screen">
-      <Col span={16} style={{backgroundImage: `url(${bgImg})`}}></Col>
+      <Col span={16} style={{backgroundImage: `url(${bgImg})`}} className="bg-cover"></Col>
       <Col span={8} className="px-8">
         <div className="flex flex-col h-screen place-content-center">
           <h3 className="font-bold text-4xl mb-7 text-center">Register</h3>
