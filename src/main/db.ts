@@ -11,7 +11,7 @@ export const authenticate = async(user: string, password: string) => {
 
     pool = await sql.connect({
       server: "localhost",
-      database: "master",
+      database: "PJnew2",
       user,
       password,
       pool: {
@@ -52,5 +52,20 @@ export const getConnection = async () => {
   } catch (error) {
     console.error(error);
     pool = null;
+    throw error;
   }
+}
+
+export const getUser = async () => {
+  const connection = await getConnection();
+  const request = await connection.request();
+  const user = await request.query("SELECT CURRENT_USER");
+  return user.recordset[0][""];
+}
+
+export const getRole = async (name: string) => {
+  const connection = await getConnection();
+  const request = await connection.request();
+  const role = await request.query(`SELECT LOAINGUOIDUNG FROM TAIKHOAN WHERE TENTK = '${name}'`);
+  return role.recordset[0]["LOAINGUOIDUNG"];
 }

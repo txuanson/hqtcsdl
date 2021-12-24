@@ -69,6 +69,9 @@ export default function OrderDetailTab() {
           margin: '0px 16px'
         }}
         >
+        <Row className="mb-3 space-x-2">
+          <Button type="primary">Refresh</Button>
+        </Row>
         <Table columns={columns}/>
       </Card>
     </>

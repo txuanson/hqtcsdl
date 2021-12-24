@@ -16,7 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { authenticate, closePool, getConnection } from './db';
+import { authenticate, closePool, getConnection, getRole, getUser } from './db';
 
 export default class AppUpdater {
   constructor() {
@@ -35,7 +35,18 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.handle('login', async(_event, ...args) => {
-  await authenticate(args[0], args[1]);
+  try {
+    await authenticate(args[0], args[1]);
+    const user = await getUser();
+    const role = await getRole(user);
+    return {
+      user,
+      role
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 })
 
 ipcMain.handle('logout', closePool);
