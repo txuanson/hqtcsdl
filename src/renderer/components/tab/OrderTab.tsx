@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { UserState } from "renderer/redux/reducer/userSlice";
 import moment from "moment";
-import "moment-timezone"
+import "moment-timezone";
+
 const statusMap = [
   "In Transit",
   "Delivered",
@@ -40,7 +41,7 @@ const columns = [
     title: 'Status',
     dataIndex: 'TINHTRANG',
     key: 'status',
-    render: (key: number) => statusMap[key]
+    render: (key: number) => statusMap[key] ?? "Wrong value"
   },
 ]
 

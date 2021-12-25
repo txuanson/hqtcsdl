@@ -39,15 +39,17 @@ export default function OrderDetailTab() {
   const { orderId } : any = useParams();
 
   const [address, setAddress] = useState("");
-  const [status, setStatus] = useState(1);
+  const [status, setStatus] = useState(10);
   const [alterStatus, setAlterStatus] = useState(1);
 
   const user = useSelector((state: {user: UserState}) => state.user);
 
   const handleChangeOrderStatus = () => {
-    console.log(status);
     ipc.invoke(user.role === 4 ? 'driverSetOrderStatus' : 'partnerSetOrderStatus', orderId, status).then(res => {
-      console.log(res);
+      if(res=== 1)
+        message.success("Success!");
+      else
+        message.error("Error!");
     }).catch(error => {
       message.error(error);
     })
@@ -95,7 +97,7 @@ export default function OrderDetailTab() {
             margin: '24px 16px 16px 0'
           }}
           >
-            <div> Status: <span className="font-semibold text-lg">{statusMap[status]}</span></div>
+            <div> Status: <span className="font-semibold text-lg">{statusMap[status] ?? "Wrong value!"}</span></div>
         </Card>}
         {(user.role === 4 || user.role === 2) && <Card
           title="Order Status"

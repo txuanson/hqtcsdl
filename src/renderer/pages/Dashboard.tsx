@@ -1,6 +1,6 @@
 import { Layout, Menu, Tag } from "antd";
 import { useState } from "react";
-import {UserOutlined, ShoppingCartOutlined, PaperClipOutlined, ShoppingOutlined, PlusOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {UserOutlined, ShoppingCartOutlined, PaperClipOutlined, ShoppingOutlined, PlusOutlined, DeleteOutlined, EditOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Link, Switch, Route } from "react-router-dom";
 import ProfileTab from "renderer/components/tab/ProfileTab";
 import OrderTab from "renderer/components/tab/OrderTab";
@@ -80,6 +80,10 @@ export default function Dashboard() {
           {user.role === 2 && <Menu.Item key="edit-product" icon={<EditOutlined />}>
             <Link to="/dashboard/edit-product-detail">Edit Product</Link>
           </Menu.Item>}
+
+          <Menu.Item key="logout" icon={<LogoutOutlined />}>
+            <Link to="/">Logout</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>

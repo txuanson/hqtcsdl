@@ -148,7 +148,7 @@ export const driverUpdateOrderStatusDirtyRead = async(productId: number, status:
     request.input('MADONHANG', sql.Int, productId);
     request.input('TINHTRANG', sql.Int, status);
     const product = await request.execute('USP_taixecapnhatdonhang');
-    return product.recordset;
+    return product.returnValue;
   } catch (error) {
     console.error(error);
     throw error;
