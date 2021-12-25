@@ -1,6 +1,6 @@
 import { Layout, Menu, Tag } from "antd";
 import { useState } from "react";
-import {UserOutlined, ShoppingCartOutlined, PaperClipOutlined, DropboxOutlined, ShoppingOutlined } from "@ant-design/icons";
+import {UserOutlined, ShoppingCartOutlined, PaperClipOutlined, ShoppingOutlined, PlusOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link, Switch, Route } from "react-router-dom";
 import ProfileTab from "renderer/components/tab/ProfileTab";
 import OrderTab from "renderer/components/tab/OrderTab";
@@ -10,6 +10,10 @@ import ProductListTab from "renderer/components/tab/ProductListTab";
 import ContractListTab from "renderer/components/tab/ContractListTab";
 import { useSelector } from "react-redux";
 import { UserState } from "renderer/redux/reducer/userSlice";
+import ProductDetailTab from "renderer/components/tab/ProductDetailTab";
+import EditProductDetailTab from "renderer/components/tab/EditProductDetailTab";
+import DeleteProductTab from "renderer/components/tab/DeleteProduct";
+import AddProductToOrderTab from "renderer/components/tab/AddProductToOrderTab";
 
 const { Header, Footer, Sider } = Layout;
 
@@ -34,7 +38,7 @@ export default function Dashboard() {
   const [collapsed, setCollapsed] = useState(false);
 
   const user = useSelector((state: {user: UserState}) => state.user);
-  console.log(user);
+
   return (
     <Layout style={{minHeight: "100vh"}}>
       <Sider collapsible collapsed={collapsed} onCollapse={(val) => setCollapsed(val)}>
@@ -47,10 +51,6 @@ export default function Dashboard() {
           <Menu.Item key="profile" icon={<UserOutlined/>}>
             <Link to="/dashboard">Profile</Link>
           </Menu.Item>
-
-          {user.role === 2 && <Menu.Item key="product" icon={<DropboxOutlined />}>
-            <Link to="/dashboard/product">Product</Link>
-          </Menu.Item>}
 
           {/* {user.role === 2 && <Menu.Item key="partner" icon={<UserSwitchOutlined />}>
             <Link to="/dashboard/partner">Partner</Link>
@@ -66,17 +66,33 @@ export default function Dashboard() {
           </Menu.Item>}
 
           {user.role === 3 && <Menu.Item key="shopping" icon={<ShoppingOutlined />}>
-            <Link to="/shopping">Shopping</Link>
+            <Link to="/dashboard/product-detail">Product Detail</Link>
+          </Menu.Item>}
+
+          {user.role === 3 && <Menu.Item key="add-product-to-order" icon={<PlusOutlined />}>
+            <Link to="/dashboard/add-product-to-order">Add Product To Order</Link>
+          </Menu.Item>}
+
+          {user.role === 2 && <Menu.Item key="delete-product" icon={<DeleteOutlined />}>
+            <Link to="/dashboard/delete-product">Delete Product</Link>
+          </Menu.Item>}
+
+          {user.role === 2 && <Menu.Item key="edit-product" icon={<EditOutlined />}>
+            <Link to="/dashboard/edit-product-detail">Edit Product</Link>
           </Menu.Item>}
         </Menu>
       </Sider>
       <Layout>
         <Header style={{backgroundColor: "white"}} className="shadow"></Header>
         <Switch>
+          <Route path="/dashboard/add-product-to-order" component={AddProductToOrderTab}/>
+          <Route path="/dashboard/delete-product" component={DeleteProductTab}/>
+          <Route path="/dashboard/edit-product-detail" component={EditProductDetailTab}/>
+          <Route path="/dashboard/product-detail" component={ProductDetailTab}/>
           <Route path="/dashboard/product" component={ProductListTab}/>
           <Route path="/dashboard/contract" component={ContractListTab}/>
           {/* <Route path="/dashboard/partner" component={PartnerTab}/> */}
-          <Route path="/dashboard/order/:id" component={OrderDetailTab}/>
+          <Route path="/dashboard/order/:orderId" component={OrderDetailTab}/>
           <Route path="/dashboard/order" component={OrderTab}/>
           <Route path="/dashboard" component={ProfileTab}/>
         </Switch>

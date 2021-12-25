@@ -1,7 +1,7 @@
 import {Col, Row, Form, Input, Button, message} from 'antd';
 import { ipcRenderer as ipc } from 'electron';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import userSlice from 'renderer/redux/reducer/userSlice';
 import bgImg from '../../../assets/img/login.png';
 
@@ -33,7 +33,6 @@ export default function Login(){
       <Col span={16} style={{backgroundImage: `url(${bgImg})`}} className="bg-cover"></Col>
       <Col span={8} className="px-8">
         <div className="flex flex-col h-screen place-content-center">
-          <Link to="/dashboard">dashboard</Link>
           <h3 className="font-bold text-4xl mb-7 text-center">Log in</h3>
           <Form
             layout="vertical"

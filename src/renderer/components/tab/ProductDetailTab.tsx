@@ -1,16 +1,33 @@
-import { Button } from "antd";
+import { Card, message } from "antd";
+import { ipcRenderer } from "electron";
+import { useEffect, useState } from "react";
 
 export default function ProductDetailTab() {
+  const [productName, setProductName] = useState("");
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    ipcRenderer.invoke('guestGetProductByName', 'Tivi').then(res => {
+      console.log(res);
+      if(res.length !== 0){
+        setProductName(res[0]["TENSP"])
+        setPrice(res[0]["DONGIA"]);
+      }else {
+        message.error("Not Found")
+      }
+    })
+  })
+
+
   return (
-    <div className="flex bg-white px-6 py-4 flex">
-      <div className="w-1/4">
-        <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"></img>
-      </div>
-      <div className="w-3/4 px-2">
-        <div className="font-medium text-2xl">Product Name</div>
-        <div className="text-red-500">120.000.000</div>
-        <Button>Add to card</Button>
-      </div>
-    </div>
+    <Card
+      title={productName}
+      style={{
+        margin: '24px 16px',
+        minHeight: 280,
+      }}
+      >
+    <div className="text-lg">Price: <span className="font-bold">{price}</span></div>
+    </Card>
   )
 }

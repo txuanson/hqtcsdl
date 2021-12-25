@@ -16,7 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { authenticate, closePool, getConnection, getRole, getUser } from './db';
+import { allGetProfile, authenticate, closePool, driverSetOrderStatus, driverUpdateOrderStatusDirtyRead, employeeGetListContract, employeeUpdateContract, getDriverOrder, getGuestOrder, getOrderDetail, getPartnerOrder, getRole, getUser, guestAddProductToOrder, guestGetProductByName, guestGetProductStatusDirtyRead, partnerDeleteProduct, partnerEditProduct, partnerGetListContract, partnerRequestRenewContract, partnerSetOrderStatus, updateProfile } from './db';
 
 export default class AppUpdater {
   constructor() {
@@ -45,13 +45,167 @@ ipcMain.handle('login', async(_event, ...args) => {
     }
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 })
 
 ipcMain.handle('logout', closePool);
 
-ipcMain.handle('getConnection', getConnection);
+
+ipcMain.handle('getOrderDetail', async (_event, ...args) => {
+  try {
+    const order = await getOrderDetail(args[0]);
+    return order;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+ipcMain.handle('getGuestOrder', async (_event, ...args) => {
+  try {
+    const order = await getGuestOrder(args[0]);
+    return order;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+ipcMain.handle('getPartnerOrder', async (_event, ...args) => {
+  try {
+    const order = await getPartnerOrder(args[0]);
+    return order;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+ipcMain.handle('getDriverOrder', async (_event, ...args) => {
+  try {
+    const order = await getDriverOrder(args[0]);
+    return order;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+ipcMain.handle('partnerSetOrderStatus', async (_event, ...args) =>{
+  try{
+    const response = await partnerSetOrderStatus(args[0], args[1]);
+    return response;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+})
+
+ipcMain.handle('driverSetOrderStatus', async (_event, ...args) =>{
+  try{
+    const response = await driverSetOrderStatus(args[0], args[1]);
+    return response;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+})
+
+//      DIRTY READ
+ipcMain.handle('guestGetProductStatusDirtyRead', async (_event, ...args) =>{
+  try{
+    const response = await guestGetProductStatusDirtyRead(args[0]);
+    return response;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+})
+
+ipcMain.handle('driverUpdateOrderStatusDirtyRead', async (_event, ...args) =>{
+  try{
+    const response = await driverUpdateOrderStatusDirtyRead(args[0], args[1]);
+    return response;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+})
+
+//        unrepeatable read
+ipcMain.handle('guestGetProductByName', async (_event, ...args) =>{
+  try{
+    const response = await guestGetProductByName(args[0]);
+    return response;
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+})
+
+ipcMain.handle('partnerEditProduct', async (_event, ...args) =>{
+  try{
+    await partnerEditProduct(args[0],args[1],args[2],args[3]);
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+})
+
+//        PHANTOM READ
+
+ipcMain.handle('guestAddProductToOrder', async (_event, ...args) =>{
+  try{
+    await guestAddProductToOrder(args[0],args[1],args[2],args[3]);
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+})
+
+ipcMain.handle('partnerDeleteProduct', async (_event, ...args) =>{
+  try{
+    await partnerDeleteProduct(args[0]);
+  }catch(error){
+    console.error(error);
+    throw error;
+  }
+})
+
+ipcMain.handle('allGetProfile', allGetProfile);
+ipcMain.handle('updateProfile', async(_event, ...args) => {
+  try {
+    await updateProfile(args[0],args[1],args[2],args[3]);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+ipcMain.handle('employeeGetListContract', employeeGetListContract);
+
+ipcMain.handle('partnerGetListContract', async(_event, ...args) => {
+  try {
+    const contract = await partnerGetListContract(args[0]);
+    return contract;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+ipcMain.handle('partnerRequestRenewContract', async(_event, ...args) => {
+  try {
+    await partnerRequestRenewContract(args[0], args[1]);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
+ipcMain.handle('employeeUpdateContract', employeeUpdateContract);
+
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
